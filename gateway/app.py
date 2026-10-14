@@ -73,13 +73,16 @@ def create_app(config: GatewayConfig | None = None, service: GatewayService | No
 
     @app.post("/v1/chat/completions")
     async def chat_completions(req: ChatCompletionRequest, key: ApiKeyConfig = Depends(rate_limited),
-                               x_cache_bypass: str | None = Header(default=None)):
-        bypass = (x_cache_bypass or "").lower() in {"1", "true", "yes"}
+                               x_cache_bypass: str | None = Header(default=None),
+                               x_no_fallback: str | None = Header(default=None)):
+        truthy = {"1", "true", "yes"}
+        bypass = (x_cache_bypass or "").lower() in truthy
+        fallback = (x_no_fallback or "").lower() not in truthy
         try:
             if req.stream:
-                iterator, meta = await service.stream(req, key.name, bypass)
+                iterator, meta = await service.stream(req, key.name, bypass, fallback)
                 return StreamingResponse(iterator, media_type="text/event-stream", headers=meta.headers())
-            body, meta = await service.complete(req, key.name, bypass)
+            body, meta = await service.complete(req, key.name, bypass, fallback)
             return JSONResponse(body, headers=meta.headers())
         except KeyError:
             raise _error(404, f"Unknown model '{req.model}'. Use 'auto' or one of {list(service.models)}",

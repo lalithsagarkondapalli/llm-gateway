@@ -47,6 +47,24 @@ async def test_cache_serves_during_total_outage(client):
     assert r.status_code == 200 and r.headers["x-cache"].startswith("HIT")
 
 
+async def test_no_fallback_header_pins_model(client):
+    await client.post("/admin/providers/p-small/chaos", json={"failure_rate": 1.0}, headers=ADMIN)
+    r = await client.post("/v1/chat/completions", json=chat("pin", model="small-a"),
+                          headers={**ADMIN, "X-No-Fallback": "1"})
+    assert r.status_code == 503                      # did NOT silently switch to small-b
+    await client.post("/admin/providers/p-small/chaos", json={"failure_rate": 0.0}, headers=ADMIN)
+    r = await client.post("/v1/chat/completions", json=chat("pin2", model="small-a"),
+                          headers={**ADMIN, "X-No-Fallback": "1"})
+    assert r.status_code == 200 and r.headers["x-attempts"] == "small-a"
+    assert r.headers["x-route-reason"] == "explicit:pinned"
+
+
+async def test_no_fallback_auto_uses_routers_top_choice(client):
+    hard = "Prove this theorem step by step and analyze the algorithm complexity"
+    r = await client.post("/v1/chat/completions", json=chat(hard), headers={**ADMIN, "X-No-Fallback": "1"})
+    assert r.headers["x-gateway-model"] == "large" and r.headers["x-attempts"] == "large"
+
+
 def test_circuit_breaker_state_machine():
     now = [0.0]
     cb = CircuitBreaker(failure_threshold=2, cooldown_seconds=10, clock=lambda: now[0])

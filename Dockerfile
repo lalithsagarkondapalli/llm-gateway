@@ -8,7 +8,7 @@ RUN pip install "fastapi>=0.110" "uvicorn[standard]>=0.29" "httpx>=0.27" "pydant
     "pyyaml>=6.0" "numpy>=1.26" "prometheus-client>=0.20"
 
 COPY gateway ./gateway
-COPY config.yaml config.real.yaml ./
+COPY config*.yaml ./
 
 RUN useradd --create-home --uid 10001 app
 USER app

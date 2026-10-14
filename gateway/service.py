@@ -101,7 +101,7 @@ class GatewayService:
 
     # ---------------------------------------------------------- non-streaming
     async def complete(self, req: ChatCompletionRequest, key_name: str,
-                       bypass_cache: bool = False) -> tuple[dict, RequestMeta]:
+                       bypass_cache: bool = False, allow_fallback: bool = True) -> tuple[dict, RequestMeta]:
         started = time.perf_counter()
         self._check_model(req)
         meta = RequestMeta()
@@ -112,7 +112,7 @@ class GatewayService:
             self._cache_hit(key_name, req, meta, hit.response, hit.kind, started)
             return hit.response, meta
 
-        decision = self.router.route(req)
+        decision = self.router.route(req, allow_fallback)
         meta.route_reason, meta.complexity = decision.reason, decision.complexity
         errors: list[str] = [f"{m}: circuit open" for m in decision.skipped_open_circuits]
         prev: str | None = None
@@ -153,7 +153,8 @@ class GatewayService:
 
     # -------------------------------------------------------------- streaming
     async def stream(self, req: ChatCompletionRequest, key_name: str,
-                     bypass_cache: bool = False) -> tuple[AsyncIterator[str], RequestMeta]:
+                     bypass_cache: bool = False,
+                     allow_fallback: bool = True) -> tuple[AsyncIterator[str], RequestMeta]:
         """Returns (SSE line iterator, meta). Fallback happens *before* the first token is sent,
         so the client never sees a half answer from a failed provider followed by another one."""
         started = time.perf_counter()
@@ -173,7 +174,7 @@ class GatewayService:
                 yield "data: [DONE]\n\n"
             return replay(), meta
 
-        decision = self.router.route(req)
+        decision = self.router.route(req, allow_fallback)
         meta.route_reason, meta.complexity = decision.reason, decision.complexity
         errors: list[str] = [f"{m}: circuit open" for m in decision.skipped_open_circuits]
 

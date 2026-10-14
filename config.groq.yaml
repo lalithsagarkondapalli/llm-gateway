@@ -1,0 +1,49 @@
+# Groq-only config for the real routing eval (free tier works, no credit card needed).
+#   Get a key: https://console.groq.com/keys
+#   GROQ_API_KEY=gsk_... GATEWAY_CONFIG=config.groq.yaml python -m gateway
+#
+# Prices: USD per 1K tokens, from Groq's published per-1M pricing
+# (8B: $0.05 in / $0.08 out, 70B: $0.59 in / $0.79 out). Re-check groq.com/pricing before quoting.
+# Free-tier limits are about 30 requests/min per model, so evals/run_eval.py paces itself (--rpm).
+
+auth:
+  enabled: true
+  keys:
+    - key: ${GATEWAY_ADMIN_KEY:-sk-admin-dev}
+      name: admin
+      rate_limit_rpm: 100000
+      admin: true
+
+routing:
+  strategy: complexity
+  complexity_threshold: 0.45
+  max_attempts: 2
+
+circuit_breaker:
+  failure_threshold: 5
+  cooldown_seconds: 20
+
+cache:
+  enabled: true
+  similarity_threshold: 0.92
+
+providers:
+  - name: groq
+    type: openai
+    base_url: ${GROQ_BASE_URL:-https://api.groq.com/openai/v1}
+    api_key: ${GROQ_API_KEY}
+    timeout_seconds: 60
+
+models:
+  - name: llama-8b
+    provider: groq
+    upstream_model: llama-3.1-8b-instant
+    tier: small
+    input_cost_per_1k: 0.00005
+    output_cost_per_1k: 0.00008
+  - name: llama-70b
+    provider: groq
+    upstream_model: llama-3.3-70b-versatile
+    tier: large
+    input_cost_per_1k: 0.00059
+    output_cost_per_1k: 0.00079

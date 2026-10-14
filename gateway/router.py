@@ -98,8 +98,14 @@ class Router:
         ordered = sorted(models, key=lambda m: (m.tier != want, self._cost(m)))
         return ordered, f"complexity:{want}", score
 
-    def route(self, request: ChatCompletionRequest) -> RouteDecision:
+    def route(self, request: ChatCompletionRequest, allow_fallback: bool = True) -> RouteDecision:
+        """allow_fallback=False pins the request to the single top choice (used by evals, so a
+        rate-limited model is retried by the caller instead of silently swapped for another)."""
         ordered, reason, score = self._order(request)
+        if not allow_fallback:
+            top = ordered[0]
+            ok = self.breakers[top.name].allow_request()
+            return RouteDecision([top] if ok else [], reason + ":pinned", score, [] if ok else [top.name])
         allowed, skipped = [], []
         for m in ordered:
             if len(allowed) >= self.cfg.max_attempts:

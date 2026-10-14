@@ -119,7 +119,9 @@ Takeaways: the cache avoided **57% of upstream calls** on this workload. The sem
 
 30-question dataset (15 easy factual, 15 multi-step reasoning). The complexity router sends **29/30** prompts to the intended tier. The one miss (`h14`) is kept in the dataset on purpose instead of tuning the heuristic to it.
 
-> ⚠️ Accuracy needs **real** providers. With the mocks, the harness only checks the pipeline end to end. Run it with `config.real.yaml` (Groq's free tier works) and replace this section with real accuracy and cost numbers.
+<!-- EVAL_RESULTS_START -->
+> ⚠️ Not run against real models yet. Run `./scripts/verify_mac.sh` (or `make eval-groq`) with a free Groq key. It fills in this section automatically with real accuracy and cost numbers.
+<!-- EVAL_RESULTS_END -->
 
 ---
 
@@ -143,13 +145,16 @@ docker compose up --build
 # 4. Real providers
 cp .env.example .env   # add keys
 GATEWAY_CONFIG=config.real.yaml python -m gateway
+
+# 5. Verify everything end to end on macOS (Docker build, full stack, real Groq eval)
+./scripts/verify_mac.sh
 ```
 
 ### Endpoints
 
 | Method | Path | Description |
 |---|---|---|
-| POST | `/v1/chat/completions` | OpenAI-compatible, streaming (`"stream": true`) supported. `model: "auto"` lets the router choose. Header `X-Cache-Bypass: 1` skips the cache. |
+| POST | `/v1/chat/completions` | OpenAI-compatible, streaming (`"stream": true`) supported. `model: "auto"` lets the router choose. Header `X-Cache-Bypass: 1` skips the cache; `X-No-Fallback: 1` pins the request to one model (used by evals so a rate-limited model isn't silently swapped). |
 | GET | `/v1/models` | Available models |
 | GET | `/health` | Healthy vs total models |
 | GET | `/metrics` | Prometheus metrics |
