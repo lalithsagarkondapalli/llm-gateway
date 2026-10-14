@@ -1,0 +1,68 @@
+# Real providers. Export the keys you have, delete the providers/models you don't use, then:
+#   GATEWAY_CONFIG=config.real.yaml python -m gateway
+# Check current model names and prices on each provider's pricing page before relying on cost numbers.
+
+auth:
+  enabled: true
+  keys:
+    - key: ${GATEWAY_ADMIN_KEY}
+      name: admin
+      rate_limit_rpm: 100000
+      admin: true
+
+routing:
+  strategy: complexity
+  complexity_threshold: 0.45
+  max_attempts: 3
+
+circuit_breaker:
+  failure_threshold: 3
+  cooldown_seconds: 30
+
+cache:
+  enabled: true
+  similarity_threshold: 0.92
+
+providers:
+  - name: openai
+    type: openai
+    base_url: https://api.openai.com/v1
+    api_key: ${OPENAI_API_KEY}
+  - name: anthropic
+    type: anthropic
+    api_key: ${ANTHROPIC_API_KEY}
+  - name: groq                       # free tier available - good for demos
+    type: openai
+    base_url: https://api.groq.com/openai/v1
+    api_key: ${GROQ_API_KEY}
+  - name: ollama                     # local models, free: `ollama pull llama3.2`
+    type: openai
+    base_url: http://localhost:11434/v1
+
+models:
+  - name: gpt-4o-mini
+    provider: openai
+    tier: small
+    input_cost_per_1k: 0.00015
+    output_cost_per_1k: 0.0006
+  - name: gpt-4o
+    provider: openai
+    tier: large
+    input_cost_per_1k: 0.0025
+    output_cost_per_1k: 0.01
+  - name: claude-haiku
+    provider: anthropic
+    upstream_model: claude-3-5-haiku-latest
+    tier: small
+    input_cost_per_1k: 0.0008
+    output_cost_per_1k: 0.004
+  - name: llama-3.1-8b
+    provider: groq
+    upstream_model: llama-3.1-8b-instant
+    tier: small
+    input_cost_per_1k: 0.00005
+    output_cost_per_1k: 0.00008
+  - name: llama-local
+    provider: ollama
+    upstream_model: llama3.2
+    tier: small

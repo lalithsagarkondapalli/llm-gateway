@@ -1,0 +1,30 @@
+{"id": "e1", "difficulty": "easy", "prompt": "What is the capital of France? Answer with one word.", "expected": ["paris"]}
+{"id": "e2", "difficulty": "easy", "prompt": "What is 12 multiplied by 12? Answer with just the number.", "expected": ["144"]}
+{"id": "e3", "difficulty": "easy", "prompt": "What is the chemical symbol for gold? Answer with just the symbol.", "expected": ["au"]}
+{"id": "e4", "difficulty": "easy", "prompt": "How many continents are there on Earth? Answer with just the number.", "expected": ["7", "seven"]}
+{"id": "e5", "difficulty": "easy", "prompt": "Which planet is known as the Red Planet? One word.", "expected": ["mars"]}
+{"id": "e6", "difficulty": "easy", "prompt": "What is the largest ocean on Earth? Answer briefly.", "expected": ["pacific"]}
+{"id": "e7", "difficulty": "easy", "prompt": "What language is primarily spoken in Brazil? One word.", "expected": ["portuguese"]}
+{"id": "e8", "difficulty": "easy", "prompt": "How many days are in a leap year? Just the number.", "expected": ["366"]}
+{"id": "e9", "difficulty": "easy", "prompt": "What is the boiling point of water in Celsius at sea level? Just the number.", "expected": ["100"]}
+{"id": "e10", "difficulty": "easy", "prompt": "What is the square root of 81? Just the number.", "expected": ["9", "nine"]}
+{"id": "e11", "difficulty": "easy", "prompt": "Who wrote 'Romeo and Juliet'? Give the last name only.", "expected": ["shakespeare"]}
+{"id": "e12", "difficulty": "easy", "prompt": "What does CPU stand for?", "expected": ["central processing unit"]}
+{"id": "e13", "difficulty": "easy", "prompt": "What is the freezing point of water in Fahrenheit? Just the number.", "expected": ["32"]}
+{"id": "e14", "difficulty": "easy", "prompt": "Which gas do plants absorb from the air for photosynthesis? Answer briefly.", "expected": ["carbon dioxide", "co2"]}
+{"id": "e15", "difficulty": "easy", "prompt": "What is 15% of 200? Just the number.", "expected": ["30"]}
+{"id": "h1", "difficulty": "hard", "prompt": "Analyze step by step: a bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost in cents? End your answer with 'ANSWER: <number>'.", "expected": ["answer: 5"]}
+{"id": "h2", "difficulty": "hard", "prompt": "Reason step by step: what is the time complexity of binary search on a sorted array of n elements? End with 'ANSWER: <big-O>'.", "expected": ["o(log n)", "o(logn)", "o(log(n))"]}
+{"id": "h3", "difficulty": "hard", "prompt": "Explain why, step by step: if 5 machines take 5 minutes to make 5 widgets, how many minutes would 100 machines take to make 100 widgets? End with 'ANSWER: <number>'.", "expected": ["answer: 5"]}
+{"id": "h4", "difficulty": "hard", "prompt": "Debug this Python and give the output step by step: ```\nx = [1, 2, 3]\ny = x\ny.append(4)\nprint(len(x))\n``` End with 'ANSWER: <number>'.", "expected": ["answer: 4"]}
+{"id": "h5", "difficulty": "hard", "prompt": "Derive step by step: what is the sum of the integers from 1 to 100? End with 'ANSWER: <number>'.", "expected": ["answer: 5050"]}
+{"id": "h6", "difficulty": "hard", "prompt": "Reason step by step: a train leaves at 3:40 PM and the trip takes 2 hours 35 minutes. What time does it arrive? End with 'ANSWER: <time>'.", "expected": ["6:15"]}
+{"id": "h7", "difficulty": "hard", "prompt": "Analyze this SQL step by step: table t has 3 rows with column a = 1, NULL, 3. What does SELECT COUNT(a) FROM t return? End with 'ANSWER: <number>'.", "expected": ["answer: 2"]}
+{"id": "h8", "difficulty": "hard", "prompt": "Prove step by step: how many edges does a tree with 10 nodes have? End with 'ANSWER: <number>'.", "expected": ["answer: 9"]}
+{"id": "h9", "difficulty": "hard", "prompt": "Explain why step by step: what is the worst-case time complexity of quicksort? End with 'ANSWER: <big-O>'.", "expected": ["o(n^2)", "o(n²)", "o(n2)", "o(n**2)"]}
+{"id": "h10", "difficulty": "hard", "prompt": "Reason step by step: if you flip a fair coin 3 times, what is the probability of getting exactly 2 heads? Give a fraction. End with 'ANSWER: <fraction>'.", "expected": ["3/8"]}
+{"id": "h11", "difficulty": "hard", "prompt": "Debug step by step: what does this JavaScript print? ```\nconsole.log(0.1 + 0.2 === 0.3)\n``` End with 'ANSWER: <value>'.", "expected": ["answer: false"]}
+{"id": "h12", "difficulty": "hard", "prompt": "Analyze step by step: what is 17 * 23 - 19? End with 'ANSWER: <number>'.", "expected": ["answer: 372"]}
+{"id": "h13", "difficulty": "hard", "prompt": "Reason step by step: in a room of 23 people, is the probability that two share a birthday above or below 50%? End with 'ANSWER: above' or 'ANSWER: below'.", "expected": ["answer: above"]}
+{"id": "h14", "difficulty": "hard", "prompt": "Explain step by step: how many bits are needed to represent 1000 distinct values? End with 'ANSWER: <number>'.", "expected": ["answer: 10"]}
+{"id": "h15", "difficulty": "hard", "prompt": "Analyze the algorithm step by step: what is the maximum number of comparisons binary search needs for an array of 1024 elements? End with 'ANSWER: <number>'.", "expected": ["answer: 11", "answer: 10"]}

@@ -1,0 +1,58 @@
+# Default config: runs fully offline with mock providers (no API keys needed).
+# See config.real.yaml for OpenAI / Anthropic / Groq / Ollama.
+
+auth:
+  enabled: true
+  keys:
+    - key: ${GATEWAY_ADMIN_KEY:-sk-admin-dev}
+      name: admin
+      rate_limit_rpm: 100000
+      admin: true
+    - key: ${GATEWAY_DEMO_KEY:-sk-demo-dev}
+      name: demo
+      rate_limit_rpm: 60
+
+routing:
+  strategy: complexity        # complexity | cost | latency
+  complexity_threshold: 0.45
+  max_attempts: 3
+
+circuit_breaker:
+  failure_threshold: 3
+  cooldown_seconds: 15
+
+cache:
+  enabled: true
+  similarity_threshold: 0.92
+  ttl_seconds: 3600
+  max_entries: 10000
+  max_temperature: 0.3
+
+providers:
+  - name: mock-alpha
+    type: mock
+    latency_ms: 40
+  - name: mock-beta
+    type: mock
+    latency_ms: 120
+  - name: mock-gamma
+    type: mock
+    latency_ms: 250
+
+# Prices are illustrative (USD per 1K tokens) so cost dashboards have realistic shape.
+models:
+  - name: alpha-mini
+    provider: mock-alpha
+    tier: small
+    input_cost_per_1k: 0.00015
+    output_cost_per_1k: 0.0006
+  - name: beta-mini
+    provider: mock-beta
+    tier: small
+    input_cost_per_1k: 0.0002
+    output_cost_per_1k: 0.0008
+  - name: gamma-pro
+    provider: mock-gamma
+    tier: large
+    input_cost_per_1k: 0.0025
+    output_cost_per_1k: 0.01
