@@ -2,9 +2,14 @@
 #   Get a key: https://console.groq.com/keys
 #   GROQ_API_KEY=gsk_... GATEWAY_CONFIG=config.groq.yaml python -m gateway
 #
+# Groq retires models often (Llama 3.1 8B / 3.3 70B were shut down 2026-08-16).
+# If you get "model ... does not exist", pick current IDs from https://console.groq.com/docs/models
+# and override without editing this file:
+#   GROQ_SMALL_MODEL=... GROQ_LARGE_MODEL=... bash scripts/verify_mac.sh
+#
 # Prices: USD per 1K tokens, from Groq's published per-1M pricing
-# (8B: $0.05 in / $0.08 out, 70B: $0.59 in / $0.79 out). Re-check groq.com/pricing before quoting.
-# Free-tier limits are about 30 requests/min per model, so evals/run_eval.py paces itself (--rpm).
+# (gpt-oss-20b: $0.075 in / $0.30 out, gpt-oss-120b: $0.15 in / $0.60 out). Re-check groq.com/pricing.
+# Free tier: ~30 requests/min and ~8K tokens/min per model, so evals/run_eval.py paces itself (--rpm).
 
 auth:
   enabled: true
@@ -35,15 +40,15 @@ providers:
     timeout_seconds: 60
 
 models:
-  - name: llama-8b
+  - name: groq-small
     provider: groq
-    upstream_model: llama-3.1-8b-instant
+    upstream_model: ${GROQ_SMALL_MODEL:-openai/gpt-oss-20b}
     tier: small
-    input_cost_per_1k: 0.00005
-    output_cost_per_1k: 0.00008
-  - name: llama-70b
+    input_cost_per_1k: ${GROQ_SMALL_IN_PER_1K:-0.000075}
+    output_cost_per_1k: ${GROQ_SMALL_OUT_PER_1K:-0.0003}
+  - name: groq-large
     provider: groq
-    upstream_model: llama-3.3-70b-versatile
+    upstream_model: ${GROQ_LARGE_MODEL:-openai/gpt-oss-120b}
     tier: large
-    input_cost_per_1k: 0.00059
-    output_cost_per_1k: 0.00079
+    input_cost_per_1k: ${GROQ_LARGE_IN_PER_1K:-0.00015}
+    output_cost_per_1k: ${GROQ_LARGE_OUT_PER_1K:-0.0006}

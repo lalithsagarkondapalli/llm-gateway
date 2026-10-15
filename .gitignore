@@ -9,3 +9,9 @@ htmlcov/
 *.egg-info/
 dist/
 build/
+
+Claude outputs/
+docs/resume_bullet.txt
+
+Claude outputs/
+docs/resume_bullet.txt

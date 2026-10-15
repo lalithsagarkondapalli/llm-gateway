@@ -12,6 +12,16 @@ from .base import CompletionResult, Provider, ProviderError, estimate_tokens
 RETRYABLE = {408, 409, 429, 500, 502, 503, 504}
 
 
+def _error_detail(resp: httpx.Response) -> str:
+    """Pull the provider's own error message (e.g. 'model X does not exist') for logs and 503 bodies."""
+    try:
+        err = resp.json().get("error", {})
+        msg = err.get("message") if isinstance(err, dict) else str(err)
+    except Exception:
+        msg = resp.text
+    return (msg or resp.reason_phrase or "").strip()[:200]
+
+
 class OpenAICompatProvider(Provider):
     def __init__(self, name: str, base_url: str, api_key: str | None, timeout: float = 30.0,
                  client: httpx.AsyncClient | None = None):
@@ -32,7 +42,8 @@ class OpenAICompatProvider(Provider):
 
     def _raise_for(self, resp: httpx.Response) -> None:
         if resp.status_code >= 400:
-            raise ProviderError(self.name, f"HTTP {resp.status_code}", status_code=resp.status_code)
+            raise ProviderError(self.name, f"HTTP {resp.status_code}: {_error_detail(resp)}",
+                                status_code=resp.status_code)
 
     async def complete(self, request: ChatCompletionRequest, upstream_model: str) -> CompletionResult:
         try:
@@ -56,6 +67,8 @@ class OpenAICompatProvider(Provider):
         payload = self._payload(request, upstream_model, True)
         try:
             async with self._client.stream("POST", "/chat/completions", json=payload) as resp:
+                if resp.status_code >= 400:
+                    await resp.aread()
                 self._raise_for(resp)
                 async for line in resp.aiter_lines():
                     if not line.startswith("data:"):

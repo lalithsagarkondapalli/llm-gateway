@@ -1,0 +1,910 @@
+{
+  "meta": {
+    "date": "2026-10-14",
+    "config": "config.groq.yaml",
+    "dataset_size": 30,
+    "models": {
+      "groq-small": {
+        "upstream": "openai/gpt-oss-20b",
+        "tier": "small"
+      },
+      "groq-large": {
+        "upstream": "openai/gpt-oss-120b",
+        "tier": "large"
+      }
+    }
+  },
+  "summary": [
+    {
+      "setup": "auto",
+      "accuracy": 1.0,
+      "accuracy_easy": 1.0,
+      "accuracy_hard": 1.0,
+      "total_cost_usd": 0.004493,
+      "p50_latency_ms": 743.7,
+      "errors": 0,
+      "routed_as_intended": 29,
+      "served_by": {
+        "groq-large": 14,
+        "groq-small": 16
+      }
+    },
+    {
+      "setup": "groq-large",
+      "accuracy": 1.0,
+      "accuracy_easy": 1.0,
+      "accuracy_hard": 1.0,
+      "total_cost_usd": 0.004638,
+      "p50_latency_ms": 796.8,
+      "errors": 0,
+      "routed_as_intended": null,
+      "served_by": {
+        "groq-large": 30
+      }
+    }
+  ],
+  "details": {
+    "auto": [
+      {
+        "id": "e1",
+        "difficulty": "easy",
+        "prompt": "What is the capital of France? Answer with one word.",
+        "expected": [
+          "paris"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 1.7624999999999998e-05,
+        "latency_ms": 468.2689579999959,
+        "served_by": "groq-small",
+        "answer": "Paris"
+      },
+      {
+        "id": "e10",
+        "difficulty": "easy",
+        "prompt": "What is the square root of 81? Just the number.",
+        "expected": [
+          "9",
+          "nine"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 1.68e-05,
+        "latency_ms": 203.5637920000113,
+        "served_by": "groq-small",
+        "answer": "9"
+      },
+      {
+        "id": "e11",
+        "difficulty": "easy",
+        "prompt": "Who wrote 'Romeo and Juliet'? Give the last name only.",
+        "expected": [
+          "shakespeare"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 2.2274999999999996e-05,
+        "latency_ms": 273.04854199999795,
+        "served_by": "groq-small",
+        "answer": "Shakespeare"
+      },
+      {
+        "id": "e12",
+        "difficulty": "easy",
+        "prompt": "What does CPU stand for?",
+        "expected": [
+          "central processing unit"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 2.1074999999999997e-05,
+        "latency_ms": 617.3132499999952,
+        "served_by": "groq-small",
+        "answer": "CPU stands for **Central Processing Unit**."
+      },
+      {
+        "id": "e13",
+        "difficulty": "easy",
+        "prompt": "What is the freezing point of water in Fahrenheit? Just the number.",
+        "expected": [
+          "32"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 1.7174999999999997e-05,
+        "latency_ms": 288.7415419999968,
+        "served_by": "groq-small",
+        "answer": "32"
+      },
+      {
+        "id": "e14",
+        "difficulty": "easy",
+        "prompt": "Which gas do plants absorb from the air for photosynthesis? Answer briefly.",
+        "expected": [
+          "carbon dioxide",
+          "co2"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 2.3249999999999996e-05,
+        "latency_ms": 230.8108329999925,
+        "served_by": "groq-small",
+        "answer": "Plants absorb **carbon dioxide (CO\u2082)** from the air for photosynthesis."
+      },
+      {
+        "id": "e15",
+        "difficulty": "easy",
+        "prompt": "What is 15% of 200? Just the number.",
+        "expected": [
+          "30"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 1.68e-05,
+        "latency_ms": 544.6962089999943,
+        "served_by": "groq-small",
+        "answer": "30"
+      },
+      {
+        "id": "e2",
+        "difficulty": "easy",
+        "prompt": "What is 12 multiplied by 12? Answer with just the number.",
+        "expected": [
+          "144"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 1.755e-05,
+        "latency_ms": 458.0530829999958,
+        "served_by": "groq-small",
+        "answer": "144"
+      },
+      {
+        "id": "e3",
+        "difficulty": "easy",
+        "prompt": "What is the chemical symbol for gold? Answer with just the symbol.",
+        "expected": [
+          "au"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 1.6875e-05,
+        "latency_ms": 282.0099590000069,
+        "served_by": "groq-small",
+        "answer": "Au"
+      },
+      {
+        "id": "e4",
+        "difficulty": "easy",
+        "prompt": "How many continents are there on Earth? Answer with just the number.",
+        "expected": [
+          "7",
+          "seven"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 2.1974999999999995e-05,
+        "latency_ms": 299.4618329999952,
+        "served_by": "groq-small",
+        "answer": "7"
+      },
+      {
+        "id": "e5",
+        "difficulty": "easy",
+        "prompt": "Which planet is known as the Red Planet? One word.",
+        "expected": [
+          "mars"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 1.7324999999999998e-05,
+        "latency_ms": 223.57350000000054,
+        "served_by": "groq-small",
+        "answer": "Mars"
+      },
+      {
+        "id": "e6",
+        "difficulty": "easy",
+        "prompt": "What is the largest ocean on Earth? Answer briefly.",
+        "expected": [
+          "pacific"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 1.8449999999999998e-05,
+        "latency_ms": 299.10950000000014,
+        "served_by": "groq-small",
+        "answer": "The Pacific Ocean."
+      },
+      {
+        "id": "e7",
+        "difficulty": "easy",
+        "prompt": "What language is primarily spoken in Brazil? One word.",
+        "expected": [
+          "portuguese"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 1.905e-05,
+        "latency_ms": 257.82483400000444,
+        "served_by": "groq-small",
+        "answer": "Portuguese"
+      },
+      {
+        "id": "e8",
+        "difficulty": "easy",
+        "prompt": "How many days are in a leap year? Just the number.",
+        "expected": [
+          "366"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 1.68e-05,
+        "latency_ms": 205.87337500001013,
+        "served_by": "groq-small",
+        "answer": "366"
+      },
+      {
+        "id": "e9",
+        "difficulty": "easy",
+        "prompt": "What is the boiling point of water in Celsius at sea level? Just the number.",
+        "expected": [
+          "100"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 1.8299999999999998e-05,
+        "latency_ms": 263.49299999998266,
+        "served_by": "groq-small",
+        "answer": "100"
+      },
+      {
+        "id": "h1",
+        "difficulty": "hard",
+        "prompt": "Analyze step by step: a bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost in cents? End your answer with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 5"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00018719999999999997,
+        "latency_ms": 1134.6799179999891,
+        "served_by": "groq-large",
+        "answer": "\n\\]\n\nSubtract $1.00 from both sides:\n\n\\[\n2x = 0.10\n\\]\n\nDivide by 2:\n\n\\[\nx = 0.05 \\text{ dollars}\n\\]\n\nSince 1 dollar = 100 cents, the ball costs:\n\n\\[\n0.05 \\times 100 = 5 \\text{ cents}\n\\]\n\n**ANSWER: 5**"
+      },
+      {
+        "id": "h10",
+        "difficulty": "hard",
+        "prompt": "Reason step by step: if you flip a fair coin 3 times, what is the probability of getting exactly 2 heads? Give a fraction. End with 'ANSWER: <fraction>'.",
+        "expected": [
+          "3/8"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00020114999999999998,
+        "latency_ms": 1147.0576670000128,
+        "served_by": "groq-large",
+        "answer": "HT, HTH, THH.\n\n3. **Compute the probability.**  \n   Probability = (number of favorable outcomes) \u00f7 (total number of outcomes)  \n   \\[\n   P(\\text{exactly 2 heads}) = \\frac{3}{8}.\n   \\]\n\n**ANSWER: 3/8**"
+      },
+      {
+        "id": "h11",
+        "difficulty": "hard",
+        "prompt": "Debug step by step: what does this JavaScript print? ```\nconsole.log(0.1 + 0.2 === 0.3)\n``` End with 'ANSWER: <value>'.",
+        "expected": [
+          "answer: false"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.0003327,
+        "latency_ms": 1606.1413329999823,
+        "served_by": "groq-large",
+        "answer": " differ, the comparison evaluates to `false`.\n\n5. **`console.log`**  \n   `console.log` prints the boolean result of the comparison.\n\n**Result printed to the console**\n\n```\nfalse\n```\n\n**ANSWER: false**"
+      },
+      {
+        "id": "h12",
+        "difficulty": "hard",
+        "prompt": "Analyze step by step: what is 17 * 23 - 19? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 372"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00011564999999999999,
+        "latency_ms": 870.1040419999799,
+        "served_by": "groq-large",
+        "answer": "ep calculation**\n\n1. Multiply 17 by 23  \n   \\[\n   17 \\times 23 = (17 \\times 20) + (17 \\times 3) = 340 + 51 = 391\n   \\]\n\n2. Subtract 19 from the product  \n   \\[\n   391 - 19 = 372\n   \\]\n\n**ANSWER: 372**"
+      },
+      {
+        "id": "h13",
+        "difficulty": "hard",
+        "prompt": "Reason step by step: in a room of 23 people, is the probability that two share a birthday above or below 50%? End with 'ANSWER: above' or 'ANSWER: below'.",
+        "expected": [
+          "answer: above"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.0003089999999999999,
+        "latency_ms": 1435.7165010000017,
+        "served_by": "groq-large",
+        "answer": "text{at least one match}) = 1 - P(\\text{all distinct})\n\\approx 1 - 0.4927 = 0.5073.\n\\]\n\n6. **Compare with 50\u202f%**  \n   \\(0.5073 > 0.50\\), so the probability exceeds 50\u202f%.\n\n**Conclusion**\n\nANSWER: above"
+      },
+      {
+        "id": "h14",
+        "difficulty": "hard",
+        "prompt": "Explain step by step: how many bits are needed to represent 1000 distinct values? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 10"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00015787499999999997,
+        "latency_ms": 1018.9915420000375,
+        "served_by": "groq-small",
+        "answer": "  \n   - \\(9.96578\\) rounded up gives \\(n = 10\\).\n\n5. **Verify**  \n   - With 10 bits, you can represent \\(2^{10} = 1024\\) distinct values, which is enough to cover 1000 distinct values.\n\n**ANSWER: 10**"
+      },
+      {
+        "id": "h15",
+        "difficulty": "hard",
+        "prompt": "Analyze the algorithm step by step: what is the maximum number of comparisons binary search needs for an array of 1024 elements? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 11",
+          "answer: 10"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00067935,
+        "latency_ms": 2594.108418000019,
+        "served_by": "groq-large",
+        "answer": "omparisons}_{\\max}= \\lfloor \\log_2 n \\rfloor + 1 .\n\\]\n\nFor \\(n = 1024 = 2^{10}\\):\n\n\\[\n\\lfloor \\log_2 1024 \\rfloor = 10 \\quad\\Longrightarrow\\quad\n\\text{comparisons}_{\\max}=10+1 = 11.\n\\]\n\n**ANSWER: 11**"
+      },
+      {
+        "id": "h2",
+        "difficulty": "hard",
+        "prompt": "Reason step by step: what is the time complexity of binary search on a sorted array of n elements? End with 'ANSWER: <big-O>'.",
+        "expected": [
+          "o(log n)",
+          "o(logn)",
+          "o(log(n))"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00029475,
+        "latency_ms": 1320.9969589999844,
+        "served_by": "groq-large",
+        "answer": " \u2013 The dominant factor in the running time is the number of times we can halve the array, which is `log\u2082 n`. In Big\u2011O notation constant bases are ignored, so we write `O(log n)`.\n\n**ANSWER: O(log n)**"
+      },
+      {
+        "id": "h3",
+        "difficulty": "hard",
+        "prompt": "Explain why, step by step: if 5 machines take 5 minutes to make 5 widgets, how many minutes would 100 machines take to make 100 widgets? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 5"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.0002511,
+        "latency_ms": 1194.558418000014,
+        "served_by": "groq-large",
+        "answer": "ime required does not change when we increase the number of machines proportionally to the number of widgets; the limiting factor is the per\u2011machine production time, which is 5 minutes.\n\n**ANSWER: 5**"
+      },
+      {
+        "id": "h4",
+        "difficulty": "hard",
+        "prompt": "Debug this Python and give the output step by step: ```\nx = [1, 2, 3]\ny = x\ny.append(4)\nprint(len(x))\n``` End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 4"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00028079999999999994,
+        "latency_ms": 1260.856125999993,
+        "served_by": "groq-large",
+        "answer": "e list referenced by `x`.\n   - The list currently has four elements, so `len(x)` evaluates to `4`.\n   - `print` outputs `4` to the console.\n\n**Result printed to the console**\n\n```\n4\n```\n\n**ANSWER: 4**"
+      },
+      {
+        "id": "h5",
+        "difficulty": "hard",
+        "prompt": "Derive step by step: what is the sum of the integers from 1 to 100? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 5050"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00025604999999999996,
+        "latency_ms": 1347.4032930000135,
+        "served_by": "groq-large",
+        "answer": "Hence,\n   \\[\n   S = 50 \\times 101\n   \\]\n\n6. **Compute the product**  \n   \\[\n   50 \\times 101 = 5050\n   \\]\n\n7. **Conclusion**  \n   The sum of all integers from 1 through 100 is 5,050.\n\n**ANSWER: 5050**"
+      },
+      {
+        "id": "h6",
+        "difficulty": "hard",
+        "prompt": "Reason step by step: a train leaves at 3:40 PM and the trip takes 2 hours 35 minutes. What time does it arrive? End with 'ANSWER: <time>'.",
+        "expected": [
+          "6:15"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00017429999999999998,
+        "latency_ms": 977.3038759999793,
+        "served_by": "groq-large",
+        "answer": "=\u202f6:15\u202fPM (because 40\u202fmin\u202f+\u202f35\u202fmin\u202f=\u202f75\u202fmin, which is 1\u202fhour\u202f15\u202fmin; adding the extra hour to 5:40\u202fPM gives 6:40\u202fPM\u202f\u2013\u202f25\u202fmin\u202f=\u202f6:15\u202fPM).  \n\nThus, the train arrives at **6:15\u202fPM**.\n\n**ANSWER: 6:15\u202fPM**"
+      },
+      {
+        "id": "h7",
+        "difficulty": "hard",
+        "prompt": "Analyze this SQL step by step: table t has 3 rows with column a = 1, NULL, 3. What does SELECT COUNT(a) FROM t return? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 2"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.0001971,
+        "latency_ms": 1092.3932089999937,
+        "served_by": "groq-large",
+        "answer": " = 3` \u2192 counted (non\u2011NULL)\n\n4. **Total count**  \n   - Two rows have a non\u2011NULL value in column `a`.\n\nTherefore, the query:\n\n```sql\nSELECT COUNT(a) FROM t;\n```\n\nreturns the number **2**.\n\n**ANSWER: 2**"
+      },
+      {
+        "id": "h8",
+        "difficulty": "hard",
+        "prompt": "Prove step by step: how many edges does a tree with 10 nodes have? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 9"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00039194999999999996,
+        "latency_ms": 1711.5360840000164,
+        "served_by": "groq-large",
+        "answer": "rem to a tree with 10 nodes  \n\nLet \\(|V| = 10\\).  \nUsing the theorem:\n\n\\[\n|E| = |V| - 1 = 10 - 1 = 9 .\n\\]\n\nThus any tree that has exactly ten vertices must have exactly nine edges.\n\n---\n\n**ANSWER: 9**"
+      },
+      {
+        "id": "h9",
+        "difficulty": "hard",
+        "prompt": "Explain why step by step: what is the worst-case time complexity of quicksort? End with 'ANSWER: <big-O>'.",
+        "expected": [
+          "o(n^2)",
+          "o(n\u00b2)",
+          "o(n2)",
+          "o(n**2)"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00038234999999999994,
+        "latency_ms": 1551.797209,
+        "served_by": "groq-large",
+        "answer": "dratic total amount of work.\n\n7. **Conclusion**  \n   - Therefore, the worst\u2011case running time of Quicksort grows proportionally to the square of the number of elements being sorted.\n\n**ANSWER: O(n\u00b2)**"
+      }
+    ],
+    "groq-large": [
+      {
+        "id": "e1",
+        "difficulty": "easy",
+        "prompt": "What is the capital of France? Answer with one word.",
+        "expected": [
+          "paris"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 3.5249999999999996e-05,
+        "latency_ms": 457.6933750000194,
+        "served_by": "groq-large",
+        "answer": "Paris"
+      },
+      {
+        "id": "e10",
+        "difficulty": "easy",
+        "prompt": "What is the square root of 81? Just the number.",
+        "expected": [
+          "9",
+          "nine"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 3.9599999999999994e-05,
+        "latency_ms": 857.9937089999703,
+        "served_by": "groq-large",
+        "answer": "9"
+      },
+      {
+        "id": "e11",
+        "difficulty": "easy",
+        "prompt": "Who wrote 'Romeo and Juliet'? Give the last name only.",
+        "expected": [
+          "shakespeare"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 4.454999999999999e-05,
+        "latency_ms": 516.252666000014,
+        "served_by": "groq-large",
+        "answer": "Shakespeare"
+      },
+      {
+        "id": "e12",
+        "difficulty": "easy",
+        "prompt": "What does CPU stand for?",
+        "expected": [
+          "central processing unit"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 6.434999999999999e-05,
+        "latency_ms": 699.9715839999681,
+        "served_by": "groq-large",
+        "answer": "rms most of the processing\u2014executing instructions, performing calculations, and managing data flow between other hardware components. In essence, it\u2019s often referred to as the \u201cbrain\u201d of the computer."
+      },
+      {
+        "id": "e13",
+        "difficulty": "easy",
+        "prompt": "What is the freezing point of water in Fahrenheit? Just the number.",
+        "expected": [
+          "32"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 3.735e-05,
+        "latency_ms": 475.18004199997677,
+        "served_by": "groq-large",
+        "answer": "32"
+      },
+      {
+        "id": "e14",
+        "difficulty": "easy",
+        "prompt": "Which gas do plants absorb from the air for photosynthesis? Answer briefly.",
+        "expected": [
+          "carbon dioxide",
+          "co2"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 4.7699999999999994e-05,
+        "latency_ms": 549.5481670000117,
+        "served_by": "groq-large",
+        "answer": "Plants absorb carbon dioxide (CO\u2082) from the air for photosynthesis."
+      },
+      {
+        "id": "e15",
+        "difficulty": "easy",
+        "prompt": "What is 15% of 200? Just the number.",
+        "expected": [
+          "30"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 4.0799999999999996e-05,
+        "latency_ms": 350.72204200002943,
+        "served_by": "groq-large",
+        "answer": "30"
+      },
+      {
+        "id": "e2",
+        "difficulty": "easy",
+        "prompt": "What is 12 multiplied by 12? Answer with just the number.",
+        "expected": [
+          "144"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 3.81e-05,
+        "latency_ms": 503.2561249999503,
+        "served_by": "groq-large",
+        "answer": "144"
+      },
+      {
+        "id": "e3",
+        "difficulty": "easy",
+        "prompt": "What is the chemical symbol for gold? Answer with just the symbol.",
+        "expected": [
+          "au"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 3.795e-05,
+        "latency_ms": 515.1899159999971,
+        "served_by": "groq-large",
+        "answer": "Au"
+      },
+      {
+        "id": "e4",
+        "difficulty": "easy",
+        "prompt": "How many continents are there on Earth? Answer with just the number.",
+        "expected": [
+          "7",
+          "seven"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 4.9949999999999994e-05,
+        "latency_ms": 588.0942500000401,
+        "served_by": "groq-large",
+        "answer": "7"
+      },
+      {
+        "id": "e5",
+        "difficulty": "easy",
+        "prompt": "Which planet is known as the Red Planet? One word.",
+        "expected": [
+          "mars"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 3.5249999999999996e-05,
+        "latency_ms": 568.253416999994,
+        "served_by": "groq-large",
+        "answer": "Mars"
+      },
+      {
+        "id": "e6",
+        "difficulty": "easy",
+        "prompt": "What is the largest ocean on Earth? Answer briefly.",
+        "expected": [
+          "pacific"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 3.6299999999999995e-05,
+        "latency_ms": 543.2260420000148,
+        "served_by": "groq-large",
+        "answer": "The Pacific Ocean."
+      },
+      {
+        "id": "e7",
+        "difficulty": "easy",
+        "prompt": "What language is primarily spoken in Brazil? One word.",
+        "expected": [
+          "portuguese"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 4.0499999999999995e-05,
+        "latency_ms": 618.5096250000015,
+        "served_by": "groq-large",
+        "answer": "Portuguese"
+      },
+      {
+        "id": "e8",
+        "difficulty": "easy",
+        "prompt": "How many days are in a leap year? Just the number.",
+        "expected": [
+          "366"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 3.6599999999999995e-05,
+        "latency_ms": 560.2016670000012,
+        "served_by": "groq-large",
+        "answer": "366"
+      },
+      {
+        "id": "e9",
+        "difficulty": "easy",
+        "prompt": "What is the boiling point of water in Celsius at sea level? Just the number.",
+        "expected": [
+          "100"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 3.9599999999999994e-05,
+        "latency_ms": 463.06316699997296,
+        "served_by": "groq-large",
+        "answer": "100"
+      },
+      {
+        "id": "h1",
+        "difficulty": "hard",
+        "prompt": "Analyze step by step: a bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost in cents? End your answer with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 5"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00018719999999999997,
+        "latency_ms": 907.0942920000107,
+        "served_by": "groq-large",
+        "answer": "\n\\]\n\nSubtract $1.00 from both sides:\n\n\\[\n2x = 0.10\n\\]\n\nDivide by 2:\n\n\\[\nx = 0.05 \\text{ dollars}\n\\]\n\nSince 1 dollar = 100 cents, the ball costs:\n\n\\[\n0.05 \\times 100 = 5 \\text{ cents}\n\\]\n\n**ANSWER: 5**"
+      },
+      {
+        "id": "h10",
+        "difficulty": "hard",
+        "prompt": "Reason step by step: if you flip a fair coin 3 times, what is the probability of getting exactly 2 heads? Give a fraction. End with 'ANSWER: <fraction>'.",
+        "expected": [
+          "3/8"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00020114999999999998,
+        "latency_ms": 1097.8040840000176,
+        "served_by": "groq-large",
+        "answer": "HT, HTH, THH.\n\n3. **Compute the probability.**  \n   Probability = (number of favorable outcomes) \u00f7 (total number of outcomes)  \n   \\[\n   P(\\text{exactly 2 heads}) = \\frac{3}{8}.\n   \\]\n\n**ANSWER: 3/8**"
+      },
+      {
+        "id": "h11",
+        "difficulty": "hard",
+        "prompt": "Debug step by step: what does this JavaScript print? ```\nconsole.log(0.1 + 0.2 === 0.3)\n``` End with 'ANSWER: <value>'.",
+        "expected": [
+          "answer: false"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.0003327,
+        "latency_ms": 1486.3992499999767,
+        "served_by": "groq-large",
+        "answer": " differ, the comparison evaluates to `false`.\n\n5. **`console.log`**  \n   `console.log` prints the boolean result of the comparison.\n\n**Result printed to the console**\n\n```\nfalse\n```\n\n**ANSWER: false**"
+      },
+      {
+        "id": "h12",
+        "difficulty": "hard",
+        "prompt": "Analyze step by step: what is 17 * 23 - 19? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 372"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00011564999999999999,
+        "latency_ms": 735.6207920000202,
+        "served_by": "groq-large",
+        "answer": "ep calculation**\n\n1. Multiply 17 by 23  \n   \\[\n   17 \\times 23 = (17 \\times 20) + (17 \\times 3) = 340 + 51 = 391\n   \\]\n\n2. Subtract 19 from the product  \n   \\[\n   391 - 19 = 372\n   \\]\n\n**ANSWER: 372**"
+      },
+      {
+        "id": "h13",
+        "difficulty": "hard",
+        "prompt": "Reason step by step: in a room of 23 people, is the probability that two share a birthday above or below 50%? End with 'ANSWER: above' or 'ANSWER: below'.",
+        "expected": [
+          "answer: above"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.0003089999999999999,
+        "latency_ms": 1537.2430839999538,
+        "served_by": "groq-large",
+        "answer": "text{at least one match}) = 1 - P(\\text{all distinct})\n\\approx 1 - 0.4927 = 0.5073.\n\\]\n\n6. **Compare with 50\u202f%**  \n   \\(0.5073 > 0.50\\), so the probability exceeds 50\u202f%.\n\n**Conclusion**\n\nANSWER: above"
+      },
+      {
+        "id": "h14",
+        "difficulty": "hard",
+        "prompt": "Explain step by step: how many bits are needed to represent 1000 distinct values? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 10"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00030615,
+        "latency_ms": 1508.8669169999775,
+        "served_by": "groq-large",
+        "answer": " is enough for 1000 values.  \n   - With 9 bits you would have only \\(2^9 = 512\\) values, which is insufficient.\n\n**Conclusion:** You need **10 bits** to represent 1000 distinct values.\n\n**ANSWER: 10**"
+      },
+      {
+        "id": "h15",
+        "difficulty": "hard",
+        "prompt": "Analyze the algorithm step by step: what is the maximum number of comparisons binary search needs for an array of 1024 elements? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 11",
+          "answer: 10"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00037814999999999995,
+        "latency_ms": 1659.443458999931,
+        "served_by": "groq-large",
+        "answer": "risons performed by binary search on an array of size\u202f\\(n\\) is  \n\n\\[\n\\lfloor \\log_2 n \\rfloor + 1 .\n\\]\n\nFor \\(n = 1024 = 2^{10}\\):\n\n\\[\n\\lfloor \\log_2 1024 \\rfloor + 1 = 10 + 1 = 11.\n\\]\n\n**ANSWER: 11**"
+      },
+      {
+        "id": "h2",
+        "difficulty": "hard",
+        "prompt": "Reason step by step: what is the time complexity of binary search on a sorted array of n elements? End with 'ANSWER: <big-O>'.",
+        "expected": [
+          "o(log n)",
+          "o(logn)",
+          "o(log(n))"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00028995000000000003,
+        "latency_ms": 1298.7297920000174,
+        "served_by": "groq-large",
+        "answer": "the logarithm of `n`.\n\n6. **Conclusion** \u2013 The dominant factor in the running time is the number of halving steps, which is \u0398(log\u202fn). In big\u2011O notation we write this as O(log\u202fn).\n\n**ANSWER: O(log n)**"
+      },
+      {
+        "id": "h3",
+        "difficulty": "hard",
+        "prompt": "Explain why, step by step: if 5 machines take 5 minutes to make 5 widgets, how many minutes would 100 machines take to make 100 widgets? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 5"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.0002499,
+        "latency_ms": 1368.8033339999492,
+        "served_by": "groq-large",
+        "answer": "e same 5\u2011minute period.\n\n**Conclusion**\n\nThe time required does not change when we increase the number of machines proportionally to the number of widgets; the process remains parallel.\n\n**ANSWER: 5**"
+      },
+      {
+        "id": "h4",
+        "difficulty": "hard",
+        "prompt": "Debug this Python and give the output step by step: ```\nx = [1, 2, 3]\ny = x\ny.append(4)\nprint(len(x))\n``` End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 4"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00027959999999999997,
+        "latency_ms": 1342.9527089999738,
+        "served_by": "groq-large",
+        "answer": "` refer to the same mutated list, `len(x)` evaluates the length of `[1, 2, 3, 4]`, which is `4`. The `print` statement outputs this number.\n\n**Result printed to the console**\n\n```\n4\n```\n\n**ANSWER: 4**"
+      },
+      {
+        "id": "h5",
+        "difficulty": "hard",
+        "prompt": "Derive step by step: what is the sum of the integers from 1 to 100? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 5050"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00025604999999999996,
+        "latency_ms": 1217.5129590000324,
+        "served_by": "groq-large",
+        "answer": "  \n   \\[\n   S = 50 \\times 101\n   \\]\n\n6. **Compute the product**  \n   \\[\n   50 \\times 101 = 5050\n   \\]\n\n7. **Conclusion**  \n   The sum of all integers from 1 through 100 equals 5,050.\n\n**ANSWER: 5050**"
+      },
+      {
+        "id": "h6",
+        "difficulty": "hard",
+        "prompt": "Reason step by step: a train leaves at 3:40 PM and the trip takes 2 hours 35 minutes. What time does it arrive? End with 'ANSWER: <time>'.",
+        "expected": [
+          "6:15"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00016409999999999998,
+        "latency_ms": 1092.7281259999972,
+        "served_by": "groq-large",
+        "answer": "inutes\u202f=\u202f6:15\u202fPM (because 40\u202fmin\u202f+\u202f35\u202fmin\u202f=\u202f75\u202fmin, which is 1\u202fhour\u202f15\u202fmin; adding that extra hour to 5\u202fPM gives 6\u202fPM, with 15\u202fmin left).  \n\nThus the train arrives at **6:15\u202fPM**.\n\n**ANSWER: 6:15 PM**"
+      },
+      {
+        "id": "h7",
+        "difficulty": "hard",
+        "prompt": "Analyze this SQL step by step: table t has 3 rows with column a = 1, NULL, 3. What does SELECT COUNT(a) FROM t return? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 2"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.0001971,
+        "latency_ms": 962.7408339999874,
+        "served_by": "groq-large",
+        "answer": " = 3` \u2192 counted (non\u2011NULL)\n\n4. **Total count**  \n   - Two rows have a non\u2011NULL value in column `a`.\n\nTherefore, the query:\n\n```sql\nSELECT COUNT(a) FROM t;\n```\n\nreturns the number **2**.\n\n**ANSWER: 2**"
+      },
+      {
+        "id": "h8",
+        "difficulty": "hard",
+        "prompt": "Prove step by step: how many edges does a tree with 10 nodes have? End with 'ANSWER: <number>'.",
+        "expected": [
+          "answer: 9"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00036494999999999995,
+        "latency_ms": 1607.6165419999597,
+        "served_by": "groq-large",
+        "answer": "rem to a tree with 10 vertices  \n\nLet \\(|V| = 10\\).  \nUsing the theorem:\n\n\\[\n|E| = |V| - 1 = 10 - 1 = 9 .\n\\]\n\nThus any tree that has exactly ten nodes must have exactly nine edges.\n\n---\n\n**ANSWER: 9**"
+      },
+      {
+        "id": "h9",
+        "difficulty": "hard",
+        "prompt": "Explain why step by step: what is the worst-case time complexity of quicksort? End with 'ANSWER: <big-O>'.",
+        "expected": [
+          "o(n^2)",
+          "o(n\u00b2)",
+          "o(n2)",
+          "o(n**2)"
+        ],
+        "ok": true,
+        "correct": true,
+        "cost": 0.00038234999999999994,
+        "latency_ms": 1504.6427500000163,
+        "served_by": "groq-large",
+        "answer": "dratic total amount of work.\n\n7. **Conclusion**  \n   - Therefore, the worst\u2011case running time of Quicksort grows proportionally to the square of the number of elements being sorted.\n\n**ANSWER: O(n\u00b2)**"
+      }
+    ]
+  }
+}

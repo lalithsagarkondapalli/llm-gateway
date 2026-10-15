@@ -120,7 +120,29 @@ Takeaways: the cache avoided **57% of upstream calls** on this workload. The sem
 30-question dataset (15 easy factual, 15 multi-step reasoning). The complexity router sends **29/30** prompts to the intended tier. The one miss (`h14`) is kept in the dataset on purpose instead of tuning the heuristic to it.
 
 <!-- EVAL_RESULTS_START -->
-> ⚠️ Not run against real models yet. Run `./scripts/verify_mac.sh` (or `make eval-groq`) with a free Groq key. It fills in this section automatically with real accuracy and cost numbers.
+
+Measured on **2026-10-14** with real Groq models, 30 prompts, temperature 0, cache bypassed. Raw results: [`docs/eval_groq.json`](docs/eval_groq.json).
+
+| Setup | Accuracy | Easy | Hard | Cost (USD) | p50 latency | Errors |
+|---|---|---|---|---|---|---|
+| `auto` (smart routing) | **100.0%** | 100.0% | 100.0% | $0.00449 | 744 ms | 0 |
+| always `openai/gpt-oss-120b` | **100.0%** | 100.0% | 100.0% | $0.00464 | 797 ms | 0 |
+
+**Smart routing cost 3% less than always using the large model, keeping 100% of its accuracy** (100.0% vs 100.0%).
+
+`auto` traffic split: 16 → `openai/gpt-oss-20b`, 14 → `openai/gpt-oss-120b`. 29/30 prompts went to the intended tier.
+
+**Where the cost goes:**
+
+| Prompt type | Smart routing | Always large | Saving |
+|---|---|---|---|
+| Simple (15) | $0.00028 | $0.00062 | **55%** |
+| Multi-step reasoning (15) | $0.00421 | $0.00401 | ~0% (mostly the same model; -5% is run-to-run answer-length noise) |
+
+Routing cut the cost of simple prompts by **55%** with 15/15 still correct. But on the same model a reasoning answer costs about **6×** a simple one, so reasoning prompts were 94% of spend and the overall saving depends on traffic mix. Projected saving: 3% at 50% simple traffic (this eval), 18% at 80%, 40% at 95%.
+
+Caveat: 30 prompts is a small eval, so treat these as directional numbers.
+
 <!-- EVAL_RESULTS_END -->
 
 ---

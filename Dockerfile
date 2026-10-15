@@ -10,7 +10,8 @@ RUN pip install "fastapi>=0.110" "uvicorn[standard]>=0.29" "httpx>=0.27" "pydant
 COPY gateway ./gateway
 COPY config*.yaml ./
 
-RUN useradd --create-home --uid 10001 app
+# Make the code readable by the non-root user even if the files on disk are owner-only (umask 077)
+RUN chmod -R a+rX /app && useradd --create-home --uid 10001 app
 USER app
 
 EXPOSE 8000

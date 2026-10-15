@@ -42,6 +42,15 @@ async def test_openai_errors_raise_provider_error(status):
     assert e.value.status_code == status
 
 
+async def test_upstream_error_message_is_surfaced():
+    body = {"error": {"message": "The model `old-model` does not exist", "code": "model_not_found"}}
+    p = OpenAICompatProvider("groq", "https://up.test", "k", client=client(lambda r: httpx.Response(404, json=body)))
+    with pytest.raises(ProviderError, match="does not exist"):
+        await p.complete(REQ, "old-model")
+    with pytest.raises(ProviderError, match="does not exist"):
+        [t async for t in p.stream(REQ, "old-model")]
+
+
 async def test_network_error_raises_provider_error():
     def boom(request):
         raise httpx.ConnectError("down")

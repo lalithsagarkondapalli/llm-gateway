@@ -8,6 +8,7 @@ import httpx
 
 from ..schemas import ChatCompletionRequest
 from .base import CompletionResult, Provider, ProviderError
+from .openai_compat import _error_detail
 
 API_VERSION = "2023-06-01"
 
@@ -43,7 +44,8 @@ class AnthropicProvider(Provider):
         except httpx.HTTPError as exc:
             raise ProviderError(self.name, f"network error: {exc!r}") from exc
         if resp.status_code >= 400:
-            raise ProviderError(self.name, f"HTTP {resp.status_code}", status_code=resp.status_code)
+            raise ProviderError(self.name, f"HTTP {resp.status_code}: {_error_detail(resp)}",
+                                status_code=resp.status_code)
         data = resp.json()
         text = "".join(block.get("text", "") for block in data.get("content", []) if block.get("type") == "text")
         usage = data.get("usage", {})
@@ -60,7 +62,9 @@ class AnthropicProvider(Provider):
         try:
             async with self._client.stream("POST", "/v1/messages", json=payload) as resp:
                 if resp.status_code >= 400:
-                    raise ProviderError(self.name, f"HTTP {resp.status_code}", status_code=resp.status_code)
+                    await resp.aread()
+                    raise ProviderError(self.name, f"HTTP {resp.status_code}: {_error_detail(resp)}",
+                                        status_code=resp.status_code)
                 async for line in resp.aiter_lines():
                     if not line.startswith("data:"):
                         continue

@@ -101,7 +101,8 @@ if wait_for "$BASE/health" 30; then
     curl -s -i "$BASE/v1/chat/completions" -H "Authorization: Bearer $key" \
       -H "Content-Type: application/json" "$@" -d "$body" | tr -d '\r'
   }
-  has() { printf '%s\n' "$1" | grep -qi -- "$2"; }
+  # match on a captured string: piping curl straight into `grep -q` breaks under pipefail (SIGPIPE)
+  has() { grep -qi -- "$2" <<<"$1"; }
 
   OUT="$(chat sk-demo-dev '{"model":"auto","messages":[{"role":"user","content":"What is the capital of France?"}]}')"
   t_chat()    { has "$OUT" '^HTTP/1.1 200' && has "$OUT" '"object":"chat.completion"'; }
@@ -129,7 +130,7 @@ if wait_for "$BASE/health" 30; then
   t_fallback() { [ "$CHAOS" = 200 ] && has "$OUT3" '^HTTP/1.1 200' && has "$OUT3" '^x-gateway-model: beta-mini'; }
   check "fallback: provider forced down -> request still succeeds on another model" t_fallback
 
-  t_metrics() { curl -s "$BASE/metrics" | grep -q '^gateway_requests_total'; }
+  t_metrics() { has "$(curl -s "$BASE/metrics")" '^gateway_requests_total'; }
   check "/metrics exposes gateway_requests_total" t_metrics
   t_nonroot() { [ "$(docker exec "$SMOKE" id -u)" != "0" ]; }
   check "container runs as non-root user" t_nonroot
@@ -145,7 +146,9 @@ if wait_for "$BASE/health" 30; then
   check "Docker HEALTHCHECK reports healthy" t_healthy
 else
   fail "container starts and /health responds"
-  docker logs "$SMOKE" 2>&1 | tail -20
+  echo "  Container log (last 20 lines):"
+  docker logs "$SMOKE" 2>&1 | tail -20 | sed 's/^/    /'
+  RESULTS+=("| info | container log: $(docker logs "$SMOKE" 2>&1 | tail -1 | tr '|' '/') |")
 fi
 docker rm -f "$SMOKE" >/dev/null 2>&1
 
@@ -168,7 +171,7 @@ else
       poll() {  # poll <seconds> <url> <pattern>
         local i
         for i in $(seq 1 "$1"); do
-          curl -s "$2" | grep -q -- "$3" && return 0
+          grep -q -- "$3" <<<"$(curl -s "$2")" && return 0
           sleep 1
         done
         return 1
@@ -211,25 +214,39 @@ else
   if [ -z "$GROQ_API_KEY" ]; then
     skip "Groq eval (no API key given)"
   else
+    # optional overrides (see config.groq.yaml) are forwarded to both the gateway and the eval
+    GROQ_ENV=()
+    for v in GROQ_SMALL_MODEL GROQ_LARGE_MODEL GROQ_SMALL_IN_PER_1K GROQ_SMALL_OUT_PER_1K \
+             GROQ_LARGE_IN_PER_1K GROQ_LARGE_OUT_PER_1K; do
+      if [ -n "${!v:-}" ]; then GROQ_ENV+=(-e "$v=${!v}"); fi
+    done
+    SMALL_ID="${GROQ_SMALL_MODEL:-openai/gpt-oss-20b}"
+    LARGE_ID="${GROQ_LARGE_MODEL:-openai/gpt-oss-120b}"
+    echo "  Models: small=$SMALL_ID  large=$LARGE_ID"
     docker network create "$NET" >/dev/null 2>&1
     docker run -d --name "$GROQ_GW" --network "$NET" -e GATEWAY_CONFIG=config.groq.yaml \
-      -e GATEWAY_ADMIN_KEY="$ADMIN_KEY" -e GROQ_API_KEY \
+      -e GATEWAY_ADMIN_KEY="$ADMIN_KEY" -e GROQ_API_KEY ${GROQ_ENV[@]+"${GROQ_ENV[@]}"} \
       -e GROQ_BASE_URL="${GROQ_BASE_URL:-https://api.groq.com/openai/v1}" "$IMAGE" >/dev/null
-    sleep 3
-    # one real request first, to fail fast on a bad key / network issue
+    for _ in $(seq 1 20); do  # wait until the gateway answers inside the network (max ~20s)
+      docker exec "$GROQ_GW" python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" \
+        >/dev/null 2>&1 && break
+      sleep 1
+    done
+    # one real request first (pinned to the small model, no fallback), to fail fast on a bad key / network issue
     PROBE="$(docker run --rm --network "$NET" "$IMAGE" python -c "
 import httpx, sys
-r = httpx.post('http://$GROQ_GW:8000/v1/chat/completions', timeout=60,
-    headers={'Authorization': 'Bearer $ADMIN_KEY'},
-    json={'model': 'llama-8b', 'messages': [{'role': 'user', 'content': 'Say OK'}]})
+r = httpx.post('http://$GROQ_GW:8000/v1/chat/completions', timeout=90,
+    headers={'Authorization': 'Bearer $ADMIN_KEY', 'X-No-Fallback': '1'},
+    json={'model': 'groq-small', 'messages': [{'role': 'user', 'content': 'Say OK'}]})
 print(r.status_code, r.text[:300])
 " 2>&1)"
-    if echo "$PROBE" | grep -q '^200'; then
-      pass "Groq key works (real completion from llama-3.1-8b-instant)"
-      echo "  Running 60 real requests, paced for Groq's free tier (~3-4 minutes)..."
-      if docker run --rm --network "$NET" --user root -v "$ROOT":/work -w /work "$IMAGE" \
+    if grep -q '^200' <<<"$PROBE"; then
+      pass "Groq key works (real completion from $SMALL_ID)"
+      echo "  Running 60 real requests, paced for Groq's free-tier token limits (~8-10 minutes)..."
+      if docker run --rm --network "$NET" --user root -v "$ROOT":/work -w /work \
+          -e GROQ_API_KEY=unused ${GROQ_ENV[@]+"${GROQ_ENV[@]}"} "$IMAGE" \
           python evals/run_eval.py --url "http://$GROQ_GW:8000" --key "$ADMIN_KEY" \
-          --config config.groq.yaml --models auto,llama-70b --rpm 20 --concurrency 3 \
+          --config config.groq.yaml --models auto,groq-large --rpm 8 --concurrency 2 \
           --out docs/eval_groq.json; then
         pass "eval completed (docs/eval_groq.json)"
         if docker run --rm --user root -v "$ROOT":/work -w /work "$IMAGE" \
@@ -243,8 +260,19 @@ print(r.status_code, r.text[:300])
         fail "eval run"
       fi
     else
-      fail "Groq key check: $(echo "$PROBE" | head -c 200)"
-      echo "  Check the key at https://console.groq.com/keys (and that you're online)."
+      fail "Groq check: $(echo "$PROBE" | head -c 300)"
+      if grep -qi "does not exist\|decommissioned\|404" <<<"$PROBE"; then
+        echo "  Groq has probably retired one of these model IDs. Models your key can use right now:"
+        curl -s https://api.groq.com/openai/v1/models -H "Authorization: Bearer $GROQ_API_KEY" \
+          | grep -o '"id":"[^"]*"' | sed 's/"id":/    /' | sort
+        echo "  Rerun with current IDs, e.g.:"
+        echo "    GROQ_SMALL_MODEL=<small id> GROQ_LARGE_MODEL=<large id> bash scripts/verify_mac.sh --skip-stack"
+      elif grep -qi "ConnectError\|Connection refused\|Name or service not known" <<<"$PROBE"; then
+        echo "  The gateway container didn't start. Its last log lines:"
+        docker logs "$GROQ_GW" 2>&1 | tail -15 | sed 's/^/    /'
+      else
+        echo "  Check the key at https://console.groq.com/keys (and that you're online)."
+      fi
     fi
     docker rm -f "$GROQ_GW" >/dev/null 2>&1
   fi
