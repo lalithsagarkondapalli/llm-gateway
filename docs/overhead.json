@@ -3,21 +3,21 @@
   "cache_entries_at_start": 10000,
   "overhead_ms": {
     "cache_miss_full_pipeline": {
-      "p50": 1.719,
-      "p95": 2.291,
-      "p99": 3.206
+      "p50": 0.468,
+      "p95": 1.224,
+      "p99": 1.502
     },
     "cache_hit": {
-      "p50": 0.641,
-      "p95": 0.831,
-      "p99": 1.59
+      "p50": 0.181,
+      "p95": 0.227,
+      "p99": 0.431
     },
     "cache_disabled": {
-      "p50": 0.762,
-      "p95": 1.231,
-      "p99": 1.94
+      "p50": 0.205,
+      "p95": 0.231,
+      "p99": 0.291
     }
   },
-  "single_core_capacity_rps_estimate": 582,
-  "python": "3.13.16"
+  "single_core_capacity_rps_estimate": 2138,
+  "python": "3.12.15"
 }

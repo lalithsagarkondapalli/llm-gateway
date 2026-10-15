@@ -1,37 +1,37 @@
 {
   "baseline": {
-    "requests": 3454,
+    "requests": 4244,
     "success_rate": 1.0,
-    "served_after_fallback": 12,
+    "served_after_fallback": 16,
     "served_by": {
-      "alpha-mini": 3439,
-      "beta-mini": 15
+      "alpha-mini": 4228,
+      "beta-mini": 16
     },
     "outcomes": {
-      "ok": 3454
+      "ok": 4244
     }
   },
   "outage": {
-    "requests": 1530,
+    "requests": 1570,
     "success_rate": 1.0,
-    "served_after_fallback": 0,
+    "served_after_fallback": 4,
     "served_by": {
-      "beta-mini": 1530
+      "beta-mini": 1570
     },
     "outcomes": {
-      "ok": 1530
+      "ok": 1570
     }
   },
   "recovery": {
-    "requests": 2123,
+    "requests": 2736,
     "success_rate": 1.0,
     "served_after_fallback": 0,
     "served_by": {
-      "beta-mini": 782,
-      "alpha-mini": 1341
+      "beta-mini": 795,
+      "alpha-mini": 1941
     },
     "outcomes": {
-      "ok": 2123
+      "ok": 2736
     }
   }
 }
