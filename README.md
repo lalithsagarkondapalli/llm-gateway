@@ -4,7 +4,7 @@
 
 Point any OpenAI SDK at it by changing one URL. Behind that URL, the gateway decides which model should answer, falls back automatically when a provider fails, serves repeated questions from cache, enforces per-key rate limits, and exports Prometheus metrics to a Grafana dashboard.
 
-![CI](https://github.com/YOUR_USERNAME/llm-gateway/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/lalithsagarkondapalli/llm-gateway/actions/workflows/ci.yml/badge.svg)
 
 ```python
 from openai import OpenAI
